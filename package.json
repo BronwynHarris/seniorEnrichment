@@ -4,9 +4,11 @@
   "description": "A review time project",
   "main": "index.js",
   "scripts": {
-    "seed": "node seed.js",
-    "start:dev": "webpack -w & nodemon main.js -e html,js,css --ignore public",
-    "start": "node main"
+   "seed": "node seed.js",
+    "postinstall": "npm run webpack && npm run seed",
+    "webpack": "./node_modules/webpack/bin/webpack.js",
+    "start:dev": "npm run webpack -- -w & nodemon main",
+    "start": "node server"
   },
   "keywords": ["react", "redux", "skeleton"],
   "dependencies": {

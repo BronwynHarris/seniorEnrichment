@@ -9,3 +9,7 @@ db.sync() // if you update your db schemas, make sure you drop the tables first 
     console.log('db synced')
     app.listen(PORT, () => console.log(`studiously serving silly sounds on port ${PORT}`))
   })
+  .catch((error) => {
+    console.log(error)
+  }
+)

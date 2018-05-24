@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const { Student } = require('../db/models');
+const { Student } = require('../db');
 
 router.get('/', async(req, res, next) => {
   try {
-    const students = Student.findAll({
+    const students = await Student.findAll({
       include: [{all: true, nested: true}]
     })
     res.json(students)
@@ -12,33 +12,26 @@ router.get('/', async(req, res, next) => {
   }
 })
 
-router.get(':/studentId', async(req, res, next) => {
-  try {
-    const student = Student.findOne({
-      where: {
-        id: req.params.studentId
-      }
-    })
-    res.json(student)
-  } catch (err){
-    next(err)
-  }
+router.get('/:id', async(req, res, next) => {
+  Student.findById(req.params.id)
+  .then(student => res.send(student))
+  .catch(next)
 })
 
 router.post('/addStudent', async(req, res, next) => {
   try {
-    const newStudent = Student.create(req.body)
+    const newStudent = await Student.create(req.body)
     res.json(newStudent)
   } catch (err) {
     next(err)
   }
 })
 
-router.put('/:studentId', (req, res, next) => {
+router.put('/:id', async(req, res, next) => {
   try {
-    const updatedStudent = Student.findOne({
+    const updatedStudent = await Student.findOne({
       where: {
-        id: req.params.studentId
+        id: req.params.id
       }
     }).update(req.body)
     res.json(updatedStudent)
@@ -47,7 +40,8 @@ router.put('/:studentId', (req, res, next) => {
   }
 })
 
-router.delete(':/studentId', async(req, res, next) => {
+//need await below?
+router.delete('/:id', async(req, res, next) => {
   try {
     Student.destroy({
       where: {

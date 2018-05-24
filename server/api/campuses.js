@@ -1,40 +1,33 @@
 const router = require("express").Router();
-const { Campus } = require("../db/models");
+const { Campus } = require("../db");
 
 router.get('/', async (req, res, next) => {
   try {
-    const campuses = Campus.findAll();
+    const campuses = await Campus.findAll();
     res.json(campuses);
   } catch (err) {
     next(err);
   }
 });
 
-router.get('/:campusId', async (req, res, next) => {
-  try {
-    const campus = Campus.findById({
-      where: {
-        id: req.params.campusId
-      }
-    });
-    res.json(campus);
-  } catch (err) {
-    next(err);
-  }
+router.get('/:id', (req, res, next) => {
+  Campus.findById(req.params.id)
+  .then(campus => res.send(campus))
+  .catch(next)
 });
 
 router.post('/addCampus', async (req, res, next) => {
   try {
-    const newCampus = Campus.create(req.body);
+    const newCampus = await Campus.create(req.body);
     res.status(201).json(newCampus);
   } catch (err) {
     next(err);
   }
 });
 
-router.put('/:campusId', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
-    const updatedCampus = Campus.findOne({
+    const updatedCampus = await Campus.findOne({
       where: {
         id: req.params.id
       }
@@ -45,7 +38,7 @@ router.put('/:campusId', async (req, res, next) => {
   }
 });
 
-router.delete('/:campusId', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     await Campus.destroy({
       where: {
