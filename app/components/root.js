@@ -48,13 +48,15 @@ class Root extends React.Component{
       </HashRouter>
     );
   }
+}
 
+const mapState = null;
 
-  const mapDispatch = dispatch => ({
-    fetch() {
-      dispatch(getCampuses());
-      dispatch(getStudents());
-    }
-  });
+const mapDispatch = dispatch => ({
+  fetch() {
+    dispatch(getCampuses());
+    dispatch(getStudents());
+  }
+});
 
-export default connect(null, mapDispatchToProps)(Root);
+export default connect(mapState, mapDispatch)(Root);

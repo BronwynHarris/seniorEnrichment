@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import store from './store';
 import Root from './components/root';
 
-render(
+ReactDOM.render(
   <Provider store={store}>
     <Root />
   </Provider>,

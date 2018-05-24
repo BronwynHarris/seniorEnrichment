@@ -5,55 +5,64 @@ import { deleteCampus } from '../store';
 
 import StudentItem from './StudentItem';
 
-const Campus = (props) => {
-  const { campus, students } = props;
-  if (!campus) return null;
-  const studentArr = students.filter(student => student.campusId === campus.id);
+const Campus = ({ campus, del, campusStudents, studentsNotOnCampus }) => {
+  if(!campus) return null;
   return (
-    <div className='navMargin'>
-      <div id='campusDetail'>
-        <img className='campusImage' src={campus.imageURL} />
-        <div className='campusInfo'>
-          <div>
-            <h1> {campus.name} </h1>
-            <p> {campus.description} </p>
-            <h5> Located At: </h5>
-            <h6> {campus.addressLine1} </h6>
-            <h6> {campus.addressLine2} </h6>
+    <div>
+      <div className='row campus justify-content-center'>
+        <div className='col-md-6 col-sm-12'>
+          <div id='campus-image'>
+            <img className='img-fluid' src={ campus.imageUrl} />
           </div>
-          <div className='campusButtons'>
-            <Link to={`/campuses/${campus.id}/edit`} params={{campus: campus.id}}><button className='btn btn-dark'>Edit</button></Link>&nbsp;
-            <button onClick={() => props.deleteCampus(campus)} className='btn btn-danger'>Delete</button>
+        </div>
+        <div className='col-md-6 col-sm-12'>
+          <h1>{ campus.name }</h1>
+          <Link to={`/editcampus/${campus.id}`}><button className='btn btn-outline-primary'>Edit</button></Link>
+          <button className='button-margin btn btn-outline-danger' onClick={ () => del(campus.name) }>Delete</button>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col-md-6 col-sm-12' id='campus-header'>
+          <h1>{ !campusStudents.length ? 'There are no students on this campus.' : 'Students on Campus' }</h1>
+        </div>
+        <div className='col-md-6 col-sm-12' id='add-student-to-campus'>
+          <div className='col-12'>
+            <Link to={{
+              pathname: '/addstudent',
+              state: { campus }
+            }}>
+              <button className='btn btn-outline-primary'>
+                Add New Student
+              </button>
+            </Link>
           </div>
         </div>
       </div>
-      <div id='campusStudents'>
-        <h1 className='listTitle'>Students on Campus</h1>
-        <Link to={`/students/create`}><button className='btn btn-light addButton'> Add Student </button></Link>
-      </div>
-      <div className='studentsPadding studentsList'>
-        {
-          studentArr.length ?
-          studentArr.map(student => <StudentItem key={student.id} path={location.hash} student={student}/>)
-          : <div className='center'> There are no students currently enrolled at {campus.name} </div>
-        }
+      <div className='row'>
+        <div className='col-12'>
+          <StudentItem students={ campusStudents } />
+        </div>
       </div>
     </div>
-  )
+  );
 };
 
-const mapStateToProps = ({ campuses, students }, ownProps) => {
-  const campus = campuses.find(campus => campus.id === ownProps.id*1 )
-  return {
-    campus,
-    students
-  };
+const mapState = (state, { match }) => {
+  const id = match.params.id;
+  const campus = state.campuses.find(campus => campus.id === Number(match.params.id));
+  const students = state.students
+  const campusStudents = students.filter(student => student.campusId === Number(id));
+  const studentsNotOnCampus = students.filter(student => student.campusId !== Number(id));
+  return { campus, campusStudents, studentsNotOnCampus, id };
 };
 
-const mapDispatchToProps = (dispatch, { history }) => {
-  return {
-    deleteCampus: (campus) => dispatch(deleteCampus(campus, history))
-  };
-};
+const mapDispatch = (dispatch, { history, match }) => ({
+  del(name) {
+    if(window.confirm(`Are you sure you want to delete the ${name}?`)){
+      dispatch(deleteCampus(match.params.id, history));
+    }
+  }
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Campus);
+export default connect(mapState, mapDispatch)(Campus);
+

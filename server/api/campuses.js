@@ -16,7 +16,7 @@ router.get('/:id', (req, res, next) => {
   .catch(next)
 });
 
-router.post('/addCampus', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const newCampus = await Campus.create(req.body);
     res.json(newCampus);
