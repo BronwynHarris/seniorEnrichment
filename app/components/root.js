@@ -1,54 +1,60 @@
-import React, {Component} from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchStudents, fetchCampuses } from '../store';
+import { getCampuses, getStudents } from '../reducers';
+
 import Nav from './Nav';
 import Home from './Home';
 import Students from './Students';
-import Student from './Student';
+import Campuses from './Campuses';
+import EditCampus from './EditCampus';
 import EditStudent from './EditStudent';
 import CreateStudent from './CreateStudent';
-import Campuses from './Campuses';
-import Campus from './Campus';
-import EditCampus from './EditCampus';
 import CreateCampus from './CreateCampus';
+import Student from './Student';
+import Campus from './Campus';
+import Footer from './Footer';
 
-class Root extends Component{
+class Root extends React.Component{
 
-  componentDidMount(){
-    this.props.fetchStudents();
-    this.props.fetchCampuses();
+  constructor(props) {
+    super(props);
   }
 
-  render(){
+  componentDidMount() {
+    this.props.fetch();
+  }
+
+  render() {
     return (
-      <Router>
+      <HashRouter>
         <div>
           <Nav />
           <div className='container-fluid'>
             <Switch>
-              <Route path='/' exact component={ Home } />
-              <Route path='/students' exact component={ Students } />
-              <Route path='/students/create' exact render={({history}) =>  <CreateStudent history={history} /> } />
-              <Route path='/students/:id' exact render={({match, history}) =>  <Student history={history} id={match.params.id} /> } />
-              <Route path='/students/:id/edit' render={({match, history}) =>  <EditStudent id={match.params.id} history={history} /> } />
-              <Route path='/campuses' exact component={ Campuses } />
-              <Route path='/campuses/create' render={({history}) =>  <CreateCampus history={history} /> } />
-              <Route path='/campuses/:id' exact render={({ match, history }) =>  <Campus id={match.params.id} history={history} /> } />
-              <Route path='/campuses/:id/edit' render={({ match, history }) =>  <EditCampus id={match.params.id} history={history} /> } />
+              <Route path='/students/:id' component={ Student } />
+              <Route path='/campuses/:id' component={ Campus } />
+              <Route path='/editstudent/:id' component={ EditStudent } />
+              <Route path='/editcampus/:id' component={ EditCampus } />
+              <Route path='/createstudent' component={ CreateStudent } />
+              <Route path='/createcampus' component= { CreateCampus } />
+              <Route path='/students' component={ Students } />
+              <Route path='/campuses' component={ Campuses } />
+              <Route exact path='/' component={ Home } />
             </Switch>
           </div>
+          <Footer />
         </div>
-      </Router>
-    )
+      </HashRouter>
+    );
   }
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchStudents: () => dispatch(fetchStudents()),
-    fetchCampuses: () => dispatch(fetchCampuses())
-  };
-};
+
+  const mapDispatch = dispatch => ({
+    fetch() {
+      dispatch(getCampuses());
+      dispatch(getStudents());
+    }
+  });
 
 export default connect(null, mapDispatchToProps)(Root);

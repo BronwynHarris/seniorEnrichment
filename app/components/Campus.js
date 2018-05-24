@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Students from './Students';
 import { Link } from 'react-router-dom';
 import { deleteCampus } from '../store';
+
 import StudentItem from './StudentItem';
 
 const Campus = (props) => {

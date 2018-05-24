@@ -19,7 +19,7 @@ router.get('/:id', (req, res, next) => {
 router.post('/addCampus', async (req, res, next) => {
   try {
     const newCampus = await Campus.create(req.body);
-    res.status(201).json(newCampus);
+    res.json(newCampus);
   } catch (err) {
     next(err);
   }
@@ -27,7 +27,7 @@ router.post('/addCampus', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    const updatedCampus = await Campus.findOne({
+    const updatedCampus = await Campus.findById({
       where: {
         id: req.params.id
       }
