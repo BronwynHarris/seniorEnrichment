@@ -1,66 +1,105 @@
 import axios from 'axios';
-import { GET_STUDENTS, CREATE_STUDENT, UPDATE_STUDENT, DELETE_STUDENT } from './constants';
-import { errorHandler } from './errors';
 
-export const fetchStudents = () => {
-  return (dispatch) => {
-    return axios.get('/api/students')
-      .then(res => res.data)
-      .then(students => dispatch({ type: GET_STUDENTS, students}))
-      .catch(err => dispatch(errorHandler(err.response.data.errors)))
-  };
-};
+//action types
+const GOT_STUDENTS = 'GOT_STUDENTS';
+const REMOVE_STUDENT = 'REMOVE_STUDENT';
+const GOT_STUDENT = 'GOT_STUDENT';
+const UPDATE_STUDENT = 'UPDATE_STUDENT';
+const DESTROY_STUDENT = 'DESTROY_STUDENT';
 
-export const createStudent = (student, history) => {
-  return (dispatch) => {
-    return axios.post('/api/students', student)
-      .then(res => res.data)
-      .then(student => {
-        dispatch({ type: CREATE_STUDENT, student })
-        history.push(`/students/${student.id}`)
-      })
-      .catch(err => dispatch(errorHandler(err.response.data.errors)))
-  };
-};
 
-export const updateStudent = (student, history, path) => {
-  return (dispatch) => {
-    return axios.put(`/api/students/${student.id}`, student)
-      .then(res => res.data)
-      .then(student => {
-        dispatch({ type: UPDATE_STUDENT, student })
-        if(path === 'students') {
-          history.push(`/students/${student.id}`)
-        }
-      })
-      .catch(err => dispatch(errorHandler(err.response.data.errors)))
-  };
-};
+//action creators
+const getStudentsFromStore = students => {
+  return {
+    type: GOT_STUDENTS,
+    students
+  }
+}
 
-export const deleteStudent = (student, history) => {
-  return (dispatch) => {
-    return axios.delete(`/api/students/${student.id}`)
-      .then(() => {
-        dispatch({ type: DELETE_STUDENT, student })
-        history.push('/students')
-      })
-      .catch(err => dispatch(errorHandler(err.response.data.errors)))
-  };
-};
+const removeStudent = id => {
+  return {
+    type: REMOVE_STUDENT,
+    id
+  }
+}
 
-const studentReducer = (state = [], action) => {
+const addNewStudent = id => {
+  return {
+    type: GOT_STUDENT,
+    id
+  }
+}
+
+const changeStudent = id => {
+  return {
+    type: UPDATE_STUDENT,
+    id
+  }
+}
+
+const destroyStudent = id => {
+  return {
+    type: DESTROY_STUDENT,
+    id
+  }
+}
+
+//thunks
+
+export const getStudents = () => {
+  return async function thunk(dispatch) {
+    const { data } = await axios.get('/api/students');
+    dispatch(getStudentsFromStore(data))
+  }
+}
+
+export const deleteStudent = (id, history) =>
+  dispatch =>
+    axios.delete(`/api/students/${id}`)
+      .then(() => dispatch(destroyStudent(id)))
+      .then(() => history.pushState('/students'))
+      .catch(error => console.log(error))
+
+export const postStudent = (student, history) =>
+  dispatch =>
+      axios.post('/api/students', student)
+        .then(res => res.data)
+        .then(student => {
+          dispatch(addNewStudent(student));
+          return student.id;
+        })
+        .then(id => history.push(`/students/${id}`))
+        .catch(error => console.error(error));
+
+
+export const putStudent = (id, update, history) =>
+    dispatch =>
+      axios.put(`api/students/${id}`, update)
+        .then(res => res.data)
+        .then(student => dispatch(changeStudent(student)))
+        .then(() => history.push(`/students/${id}`))
+        .catch(error => console.log(error))
+
+
+
+//reducer
+
+const reducer = (state = [], action) => {
   switch(action.type){
-    case GET_STUDENTS:
-      return action.students;
-    case CREATE_STUDENT:
-      return [...state, action.student];
+    case GOT_STUDENTS:
+      return action.students
+    case REMOVE_STUDENT:
+      return action.student
+    case GOT_STUDENT:
+      return [...state, action.student]
     case UPDATE_STUDENT:
-      return state.map(student => student.id === action.student.id ? action.student : student);
-    case DELETE_STUDENT:
-      return state.filter(student => student.id !== action.student.id*1);
+      return state.map(student => student.id === action.student.id ? action.student : student)
+    case DESTROY_STUDENT:
+      return state.filter(student => student.id !== action.id)
     default:
       return state;
   }
-};
+}
 
-export default studentReducer;
+export default reducer
+
