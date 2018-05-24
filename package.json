@@ -4,14 +4,11 @@
   "description": "A review time project",
   "main": "index.js",
   "scripts": {
+    "seed": "node seed.js",
     "start:dev": "webpack -w & nodemon main.js -e html,js,css --ignore public",
     "start": "node main"
   },
-  "keywords": [
-    "react",
-    "redux",
-    "skeleton"
-  ],
+  "keywords": ["react", "redux", "skeleton"],
   "dependencies": {
     "body-parser": "^1.18.2",
     "chalk": "^2.4.1",
