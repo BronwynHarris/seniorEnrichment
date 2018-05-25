@@ -98,9 +98,7 @@ const mapStateToProps = (state, { match }) => ({
 });
 
 const mapDispatchToProps = (dispatch, { history }) => ({
-  postCampus(event, campus) {
-    dispatch(newCampus(campus, history));
-  }
+  postCampus: (campus) => dispatch(postCampus(campus, history))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateCampus);

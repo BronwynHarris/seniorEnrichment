@@ -57,7 +57,7 @@ class CreateStudent extends React.Component {
     };
 
     const isEnabled = !Object.keys(errors).some(key => errors[key]);
-
+    console.log('campuses', this.props.campuses)
     return (
       <div>
         <h1>Add Student</h1>
@@ -108,10 +108,7 @@ class CreateStudent extends React.Component {
           <div className='form-group'>
             <label htmlFor='campusId'>Campus:</label>
             <br />
-            <select
-              name='campusId'
-              value={ this.state.campusId }
-              onChange={ this.handleChange }>
+            <select name='campusId' value={ this.state.campusId } onChange={ this.handleChange }>
               <option value='-1'>Select a campus...</option>
               { campuses && campuses.map(campus => (
                 <option key={ campus.id } value={ campus.id }>{ campus.name }</option>
@@ -126,6 +123,9 @@ class CreateStudent extends React.Component {
   }
 }
 
+const mapStateToProps = (state, { match }) => ({
+  campuses: state.campuses
+})
 
 const mapDispatch = (dispatch, { history }) => ({
   post(event, student) {
@@ -134,4 +134,4 @@ const mapDispatch = (dispatch, { history }) => ({
   }
 });
 
-export default connect(null, mapDispatch)(CreateStudent);
+export default connect(mapStateToProps, mapDispatch)(CreateStudent);
