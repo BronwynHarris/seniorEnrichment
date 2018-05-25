@@ -5,6 +5,11 @@ body {
   font-size: 17px;
 }
 
+a {color:#bce0cf;}      /* unvisited link */
+a:visited {color:#8295b5;}  /* visited link */
+a:hover {color:#5dacba;}  /* mouse over link */
+a:active {color:#0000FF;}
+
 #main {
   background-size: cover;
 }
@@ -40,7 +45,7 @@ body {
   text-align: center;
   background: #3B5998;
   color: white;
-  margin-top: 50px;
+  margin: auto;
 }
 
 

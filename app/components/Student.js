@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { putStudent, deleteStudent } from '../reducers';
+import { putStudent } from '../reducers';
+import { deleteStudent } from '../reducers/students'
 
 
 class Student extends React.Component {
@@ -16,7 +17,7 @@ class Student extends React.Component {
   }
 
   render() {
-    const { student, del, campuses, match, put } = this.props;
+    const { student, deleteCampus, campuses, match, put } = this.props;
 
     if(!student) return null;
 
@@ -33,7 +34,7 @@ class Student extends React.Component {
             <img className='img-fluid' src={ student.image } className='student-img'/>
             <div className='student-edit'>
               <Link to={`/editstudent/${student.id}`}><button className='btn btn-outline-primary'>Edit</button></Link>
-              <button className='button-margin btn btn-outline-danger' onClick={ () => del(student.fullName) }>Delete</button>
+              <button className='button-margin btn btn-outline-danger' onClick={ () => this.props.del(student.id) }>Delete</button>
             </div>
           </div>
         </div>

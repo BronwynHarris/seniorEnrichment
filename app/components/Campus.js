@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { deleteCampus } from '../reducers/campuses'
 import store from '../store';
 
 import StudentItem from './StudentItem';
 
 const Campus = ({ campus, del, campusStudents }) => {
-  console.log()
+  console.log(deleteCampus)
   if(!campus) return null;
   return (
     <div>
@@ -19,7 +20,7 @@ const Campus = ({ campus, del, campusStudents }) => {
         <div className='col-md-6 col-sm-12'>
           <h1>{ campus.name }</h1>
           <Link to={`/editcampus/${campus.id}`}><button className='btn btn-outline-primary'>Edit</button></Link>
-          <button className='button-margin btn btn-outline-danger' onClick={ () => del(campus.name) }>Delete</button>
+          <button className='button-margin btn btn-outline-danger' onClick={ () => del(campus) }>Delete</button>
         </div>
       </div>
       <div className='row'>
