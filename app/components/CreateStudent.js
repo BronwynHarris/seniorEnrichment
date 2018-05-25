@@ -5,7 +5,6 @@ import { postStudent } from '../reducers';
 class CreateStudent extends React.Component {
   constructor(props) {
     super(props);
-    const campus = this.props.location.state ? this.props.location.state.campus : null;
     this.state = {
       firstName: '',
       lastName: '',

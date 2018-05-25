@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import { getStudents } from '../reducers/students';
 import store from '../store'
 
 // import StudentItem from './StudentItem';
