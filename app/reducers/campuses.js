@@ -55,10 +55,9 @@ export const postCampus = (campus, history) =>
     axios.post('/api/campuses', campus)
       .then(res => res.data)
       .then(campus => {
-        dispatch(addNewCampus(campus));
-        return campus.id;
+        history.push(`/campuses/${campus.id}`)
+        dispatch({ type: GOT_NEW_CAMPUS, campus })
       })
-      .then(id => history.push(`/campuses/${id}`))
       .catch(error => console.error(error));
 
 export const deleteCampus = (id, history) =>

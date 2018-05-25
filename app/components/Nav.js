@@ -6,19 +6,19 @@ const Nav = () => (
     <NavLink className="navbar-brand" to='/'>
       {/* <img src='/images/small-rocket-ship-silhouette.svg' style={{width: '30px'}} /> MHIA */}
     </NavLink>
-    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon" />
-    </button>
+    </button> */}
     <div className="collapse navbar-collapse" id="navbarNav">
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <NavLink className="nav-link" exact path to="/" activeClassName='active'>Home <span className="sr-only">(current)</span></NavLink>
+          <NavLink className="nav-link" exact to="/" activeClassName='active'>Home <span className="sr-only">(current)</span></NavLink>
         </li>
         <li className="nav-item">
-          <NavLink className="nav-link" path to="/campuses" activeClassName='active'>Campuses</NavLink>
+          <NavLink className="nav-link" to="/campuses" activeClassName='active'>Campuses</NavLink>
         </li>
         <li className="nav-item">
-          <NavLink className="nav-link" path to="/students" activeClassName='active'>Students</NavLink>
+          <NavLink className="nav-link" to="/students" activeClassName='active'>Students</NavLink>
         </li>
       </ul>
     </div>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { postCampus } from '../reducers';
+import { postCampus } from '../reducers/campuses';
 
 class CreateCampus extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
-      image: undefined,
+      image: 'enter link',
       touched: {
         name: false,
         city: false,
@@ -19,6 +19,7 @@ class CreateCampus extends React.Component {
     this.goBack = this.goBack.bind(this);
     this.validate = this.validate.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   goBack() {
@@ -40,6 +41,11 @@ class CreateCampus extends React.Component {
     };
   }
 
+  onSubmit(ev){
+    ev.preventDefault();
+    this.props.postCampus(this.state);
+  }
+
   render() {
     const { post } = this.props;
     const { name, image, touched } = this.state;
@@ -52,11 +58,11 @@ class CreateCampus extends React.Component {
     };
 
     const isEnabled = !Object.keys(errors).some(key => errors[key]);
-
+    console.log(this.props)
     return (
       <div>
         <h1>Add Campus</h1>
-        <form onSubmit={ (event) => post(event, this.state) }>
+        <form onSubmit={this.onSubmit}>
           <div className='form-group'>
             <label htmlFor='name'>Name:</label>
             <input
@@ -74,7 +80,7 @@ class CreateCampus extends React.Component {
               type='text'
               name='image'
               className='form-control'
-              value={ image }
+              value = {image}
               onChange={ this.handleChange } />
           </div>
 
@@ -86,16 +92,15 @@ class CreateCampus extends React.Component {
   }
 }
 
-const mapState = (state, { match }) => ({
+const mapStateToProps = (state, { match }) => ({
   error: state.error,
   campus: state.campuses.find(campus => campus.id === Number(match.params.id))
 });
 
-const mapDispatch = (dispatch, { history }) => ({
-  post(event, campus) {
-    event.preventDefault();
-    dispatch(postCampus(campus, history));
+const mapDispatchToProps = (dispatch, { history }) => ({
+  postCampus(event, campus) {
+    dispatch(newCampus(campus, history));
   }
 });
 
-export default connect(mapState, mapDispatch)(CreateCampus);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateCampus);

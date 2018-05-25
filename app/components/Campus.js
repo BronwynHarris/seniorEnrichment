@@ -1,18 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteCampus } from '../store';
+import store from '../store';
 
 import StudentItem from './StudentItem';
 
-const Campus = ({ campus, del, campusStudents, studentsNotOnCampus }) => {
+const Campus = ({ campus, del, campusStudents }) => {
+  console.log()
   if(!campus) return null;
   return (
     <div>
       <div className='row campus justify-content-center'>
         <div className='col-md-6 col-sm-12'>
           <div id='campus-image'>
-            <img className='img-fluid' src={ campus.imageUrl} />
+            <img className='img-fluid' src={ campus.image} />
           </div>
         </div>
         <div className='col-md-6 col-sm-12'>
@@ -27,10 +28,7 @@ const Campus = ({ campus, del, campusStudents, studentsNotOnCampus }) => {
         </div>
         <div className='col-md-6 col-sm-12' id='add-student-to-campus'>
           <div className='col-12'>
-            <Link to={{
-              pathname: '/addstudent',
-              state: { campus }
-            }}>
+            <Link to='/addstudent'>
               <button className='btn btn-outline-primary'>
                 Add New Student
               </button>
@@ -47,7 +45,7 @@ const Campus = ({ campus, del, campusStudents, studentsNotOnCampus }) => {
   );
 };
 
-const mapState = (state, { match }) => {
+const mapStateToProps = (state, { match }) => {
   const id = match.params.id;
   const campus = state.campuses.find(campus => campus.id === Number(match.params.id));
   const students = state.students
@@ -56,7 +54,7 @@ const mapState = (state, { match }) => {
   return { campus, campusStudents, studentsNotOnCampus, id };
 };
 
-const mapDispatch = (dispatch, { history, match }) => ({
+const mapDispatchToProps = (dispatch, { history, match }) => ({
   del(name) {
     if(window.confirm(`Are you sure you want to delete the ${name}?`)){
       dispatch(deleteCampus(match.params.id, history));
@@ -64,5 +62,5 @@ const mapDispatch = (dispatch, { history, match }) => ({
   }
 });
 
-export default connect(mapState, mapDispatch)(Campus);
+export default connect(mapStateToProps, mapDispatchToProps)(Campus);
 

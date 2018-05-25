@@ -1,16 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { postStudent } from '../reducers';
+import { postStudent } from '../reducers/students';
 
 class CreateStudent extends React.Component {
   constructor(props) {
     super(props);
+    console.log('createstudent constructor', )
     this.state = {
       firstName: '',
       lastName: '',
       email: '',
-      image: undefined,
-      campusId: campus ? campus.id : -1,
+      image: 'add link',
+      campusId: -1,
       touched: {
         firstName: false,
         lastName: false,
@@ -124,6 +125,7 @@ class CreateStudent extends React.Component {
     );
   }
 }
+
 
 const mapDispatch = (dispatch, { history }) => ({
   post(event, student) {

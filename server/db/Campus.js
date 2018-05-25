@@ -9,7 +9,8 @@ const Campus = db.define('campus',
       },
       image: {
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue: 'https://www.universiteitleiden.nl/binaries/content/gallery/customsites/humanities-campus/letter-to-a-square.jpg/letter-to-a-square.jpg/d700xvar'
       }
     }
 )
