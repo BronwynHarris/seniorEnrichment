@@ -1,6 +1,178 @@
-* {
-  font-family: arial, sans-serif;
-  padding: 0;
-  margin: 0;
+body {
+  color: white;
+  background: #3B5998;
+  font-family: 'IM Fell French Canon SC', serif;
+  font-size: 17px;
+}
+
+#main {
+  background-size: cover;
+}
+
+#intro {
+  margin: 100px auto;
+  text-align: center;
+  font-family: 'IM Fell French Canon SC', serif;
+  width: 50vw;
+}
+
+.form {
+  margin: 15px auto;
+}
+
+#main > p {
+  margin: 50px auto;
+}
+
+#transfer {
+  height: 50vh;
+  width: 50vw;
+}
+
+#icon {
+  height: 10vh;
+  width: 10vw;
+  margin: 0 auto;
+}
+
+#footer {
+  height: 100%;
+  text-align: center;
+  background: #3B5998;
+  color: white;
+  margin-top: 30px;
+}
+
+#student-campus-dropdown {
+  width: 100%
+}
+
+.student-img {
+  max-width: 185px;
+}
+
+#campus-header {
+  text-align: center;
+}
+
+.campus-image {
+  text-align: center;
+}
+
+.close {
+  text-align: right;
+  color: white;
+}
+
+.bg-nav {
+  background: #3B5998;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+.campus-item {
+  margin: 20px;
   box-sizing: border-box;
+  background: black;
+  border: 2px double #8a5478;
+  padding: 15px;
+  border-radius: 50px;
+}
+
+.campus-item > a:active {
+  color: white;
+}
+
+.campus-item > img {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.edit {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.student-item {
+  background: black;
+  border: 2px double #8a5478;
+  border-radius: 20px;
+  margin: 10px;
+  padding: 15px;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.student-detail {
+  margin: 30px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  width: 75vw;
+}
+
+.student-detail > div {
+  margin: auto;
+}
+
+.student-detail select {
+  margin-bottom: 20px;
+}
+
+.student-edit {
+  text-align: center;
+}
+
+.button-margin {
+  margin-left: 10px;
+}
+
+.campus {
+  margin: 30px auto;
+}
+
+.empty-message {
+  text-align: center;
+  margin-top: 30px;
+}
+
+#add-student-to-campus {
+  padding-bottom: 0;
+}
+
+input[type='text'], select, textarea {
+  background: black;
+  color: white;
+  border: 2px double #8a5478;
+  width: 75%;
+}
+
+input[type='text']:focus, select:focus, textarea:focus {
+  background: black;
+  color: white;
+  border: 2px double #8a5478;
+  width: 75%;
+}
+
+input.error[type='text'], textarea.error {
+  border: 2px solid red;
+}
+
+.error {
+  color: red;
+}
+
+@media (max-width: 768px) {
+  #intro {
+    margin: 25px;
+    width: 100%;
+  }
 }

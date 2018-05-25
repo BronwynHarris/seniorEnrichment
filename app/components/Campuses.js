@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { removeCampus } from '../reducers';
 import CampusItem from './CampusItem';
 
-const Campuses = ({ campuses, students, del }) => {
+const Campuses = (props) => {
 
-  if (!campuses.length) {
+  if (!props.campuses.length) {
     return (
       <div className='empty-message'>
         <h2>There are no campuses in the database.</h2>
@@ -22,11 +22,17 @@ const Campuses = ({ campuses, students, del }) => {
         <Link to='/addcampus'><button className='btn btn-outline-primary'>Add Campus</button></Link>
       </div>
       <div className='row justify-content-center'>
-        <CampusItem campuses={ campuses } students={ students } del={ del } />
+        <CampusItem campuses={props.campuses} />
       </div>
     </div>
   );
 };
+
+function mapStateToProps(state) {
+  return {
+    campuses: state.campuses
+  }
+}
 
 const mapDispatch = dispatch => ({
   del(id) {
@@ -34,4 +40,4 @@ const mapDispatch = dispatch => ({
   }
 });
 
-export default connect(null, mapDispatch)(Campuses);
+export default connect(mapStateToProps, mapDispatch)(Campuses);

@@ -1,7 +1,8 @@
 import React from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCampuses, getStudents } from '../reducers';
+import { getCampuses } from '../reducers/campuses';
+import { getStudents } from '../reducers/students';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -32,8 +33,8 @@ class Root extends React.Component{
               <Route path='/campuses/:id' component={ Campus } />
               <Route path='/editstudent/:id' component={ EditStudent } />
               <Route path='/editcampus/:id' component={ EditCampus } />
-              <Route path='/createstudent' component={ CreateStudent } />
-              <Route path='/createcampus' component= { CreateCampus } />
+              <Route path='/addstudent' component={ CreateStudent } />
+              <Route path='/addcampus' component= { CreateCampus } />
               <Route path='/students' component={ Students } />
               <Route path='/campuses' component={ Campuses } />
               <Route exact path='/' component={ Home } />

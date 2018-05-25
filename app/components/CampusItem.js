@@ -10,6 +10,7 @@ const CampusItem = ({ campuses, students }) => (
         <div className='media'>
           <img className='col-6' src={ campus.imageUrl } />
           <div className='col-6'>
+            <img className='img-fluid' src={ campus.image } className='campus-img'/>
             <h5><Link to={`/campuses/${campus.id}`}>{ campus.name }</Link></h5>
             <p>{ count }</p>
           </div>

@@ -15,8 +15,7 @@ class CreateStudent extends React.Component {
       touched: {
         firstName: false,
         lastName: false,
-        email: false,
-        gpa: false
+        email: false
       }
     };
     this.handleChange = this.handleChange.bind(this);

@@ -79,16 +79,16 @@ export const putCampus = (id, update, history) =>
       .catch(error => console.error(error));
 
 //reducer
-const reducer = (state=[], action) => {
-  switch(action.type) {
+const reducer = (state = [], action) => {
+  switch (action.type) {
     case GOT_CAMPUSES:
       return action.campuses;
     case GOT_NEW_CAMPUS:
-      return [...state, action.campus];
+      return [ ...state, action.campus];
     case REMOVE_CAMPUS:
-      return state.filter(campus => campus.id !== action.id)//action.id to a number?
+      return state.filter(campus => campus.id !== Number(action.id))
     case UPDATE_CAMPUS:
-      return state.map(campus => campus.id === action.campus.id ? action.campus : campus)
+      return state.map(campus => campus.id === action.campus.id ? action.campus : campus);
     default:
     return state;
   }
