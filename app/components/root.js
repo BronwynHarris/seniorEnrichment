@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCampuses, getStudents } from '../reducers';
 
@@ -17,17 +17,13 @@ import Footer from './Footer';
 
 class Root extends React.Component{
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.fetch();
   }
 
   render() {
     return (
-      <HashRouter>
+      <Router>
         <div>
           <Nav />
           <div className='container-fluid'>
@@ -45,7 +41,7 @@ class Root extends React.Component{
           </div>
           <Footer />
         </div>
-      </HashRouter>
+      </Router>
     );
   }
 }
