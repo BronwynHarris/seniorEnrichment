@@ -25,18 +25,6 @@ router.post('/', async(req, res, next) => {
   }
 })
 
-// router.put('/:id', async(req, res, next) => {
-//   try {
-//     const updatedStudent = await Student.findOne({
-//       where: {
-//         id: req.params.id
-//       }
-//     }).update(req.body)
-//     res.json(updatedStudent)
-//   } catch (err) {
-//     next(err)
-//   }
-// })
 router.put('/:id', (req, res, next) => {
   Student.findById(req.params.id)
     .then(student => student.update(req.body))
