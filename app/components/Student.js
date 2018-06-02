@@ -51,7 +51,7 @@ const mapState = (state,  { match }) => ({
 
 const mapDispatch = (dispatch, { history, match }) => ({
   del(name) {
-    if(window.confirm(`Are you sure you want to delete ${name}?`)) {
+    if(window.confirm(`Are you sure you want to delete ${this}?`)) {
       dispatch(deleteStudent(match.params.id, history));
     }
   },

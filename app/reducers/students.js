@@ -23,7 +23,7 @@ const removeStudent = id => {
   }
 }
 
-const addNewStudent = id => {
+const gotStudent = id => {
   return {
     type: GOT_STUDENT,
     id
@@ -53,6 +53,12 @@ export const getStudents = () => {
   }
 }
 
+export const getSingleStudent = (id) => dispatch => {
+  axios.get(`/api/students/${id}`)
+      .then(res => dispatch(getSingleStudent(res.data)))
+      .catch(err => console.error('fetch single student', err))
+}
+
 export const deleteStudent = (id, history) =>
   dispatch =>
     axios.delete(`/api/students/${id}`)
@@ -65,20 +71,25 @@ export const postStudent = (student, history) =>
       axios.post('/api/students', student)
         .then(res => res.data)
         .then(student => {
-          dispatch(addNewStudent(student));
+          dispatch(gotStudent(student));
           return student.id;
         })
         .then(id => history.push(`/students/${id}`))
         .catch(error => console.error(error));
 
 
-export const putStudent = (id, update, history) =>
-    dispatch =>
-      axios.put(`api/students/${id}`, update)
-        .then(res => res.data)
-        .then(student => dispatch(changeStudent(student)))
-        .then(() => history.push(`/students/${id}`))
-        .catch(error => console.log(error))
+// export const putStudent = (id, update, history) =>
+//     dispatch =>
+//       axios.put(`api/students/${id}`, update)
+//         .then(res => res.data)
+//         .then(student => dispatch(changeStudent(student)))
+//         .then(() => history.push(`/students/${id}`))
+//         .catch(error => console.log(error))
+
+export const putStudent = (id, student) => dispatch => {
+  axios.put(`/api/students/${id}`, student)
+      .then(res => dispatch(changeStudent(res.data)))
+}
 
 
 
